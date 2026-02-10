@@ -1,0 +1,758 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rishu Kumar Sharma | UI/UX Designer Portfolio</title>
+    <meta
+      name="description"
+      content="A creative portfolio showcasing design and development work. Explore projects, learn about my process, and get in touch." />
+    <meta
+      property="og:title"
+      content="Rishu Kumar Sharma | UI/UX Designer Portfolio" />
+    <meta
+      property="og:description"
+      content="A creative portfolio showcasing design and development work by Rishu Kumar Sharma." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Rishu Kumar Sharma" />
+    <link rel="canonical" href="/" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap"
+      rel="stylesheet" />
+
+    <!-- Tailwind CSS v3 CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "system-ui", "-apple-system", "sans-serif"],
+              display: ["Outfit", "Inter", "system-ui", "sans-serif"],
+              serif: ["DM Serif Display", "serif"],
+            },
+            colors: {
+              neutral: {
+                850: "#1a1a1a",
+                950: "#0a0a0a",
+              },
+            },
+          },
+        },
+      };
+    </script>
+
+    <!-- GSAP + ScrollTrigger for animations -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body class="bg-neutral-950 text-neutral-100 font-sans antialiased">
+    <div class="app">
+      <!-- ===================== HEADER ===================== -->
+      <header
+        id="site-header"
+        class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-transparent py-6">
+        <div class="w-full mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+          <nav class="flex items-center justify-between">
+            <!-- Logo -->
+            <a
+              href="/"
+              class="text-2xl font-bold tracking-tighter text-white mix-blend-difference z-50"
+              >RK.</a
+            >
+
+            <!-- Desktop Navigation -->
+            <div class="hidden md:flex items-center gap-12">
+              <ul class="flex items-center gap-8">
+                <li>
+                  <a
+                    href="#work"
+                    class="nav-link text-sm font-medium text-neutral-400 hover:text-white transition-colors"
+                    >Work</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#about"
+                    class="nav-link text-sm font-medium text-neutral-400 hover:text-white transition-colors"
+                    >About</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#contact"
+                    class="nav-link text-sm font-medium text-neutral-400 hover:text-white transition-colors"
+                    >Contact</a
+                  >
+                </li>
+              </ul>
+              <a
+                href="#contact"
+                class="nav-link inline-flex items-center gap-2 text-sm font-medium text-white hover:text-neutral-300 transition-colors">
+                Let's Talk
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M6 6v2h8.59L5 17.59 6.41 19 16 9.41V18h2V6z" />
+                </svg>
+              </a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button
+              id="mobile-menu-btn"
+              class="md:hidden relative w-8 h-4 flex flex-col justify-between z-50"
+              aria-label="Toggle menu">
+              <span
+                id="hamburger-top"
+                class="w-full h-[2px] bg-white transition-all duration-300"></span>
+              <span
+                id="hamburger-bottom"
+                class="w-full h-[2px] bg-white transition-all duration-300"></span>
+            </button>
+          </nav>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div
+          id="mobile-menu"
+          class="fixed inset-0 bg-neutral-950 z-40 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
+          <div class="w-full mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+            <ul class="flex flex-col items-center space-y-8">
+              <li>
+                <a
+                  href="#work"
+                  class="mobile-nav-link text-4xl font-bold tracking-tighter text-white hover:text-neutral-400 transition-colors"
+                  >Work</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#about"
+                  class="mobile-nav-link text-4xl font-bold tracking-tighter text-white hover:text-neutral-400 transition-colors"
+                  >About</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#contact"
+                  class="mobile-nav-link text-4xl font-bold tracking-tighter text-white hover:text-neutral-400 transition-colors"
+                  >Contact</a
+                >
+              </li>
+              <li class="mt-8">
+                <a
+                  href="#contact"
+                  class="mobile-nav-link inline-flex items-center gap-2 text-xl font-medium text-white/70">
+                  Let's Talk
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M6 6v2h8.59L5 17.59 6.41 19 16 9.41V18h2V6z" />
+                  </svg>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </header>
+
+      <main>
+        <!-- ===================== HERO SECTION ===================== -->
+        <section
+          id="home"
+          class="scroll-mt-20 relative min-h-screen flex items-center bg-neutral-950 overflow-hidden">
+          <!-- Background Image -->
+          <div class="absolute inset-0 z-0">
+            <div class="absolute inset-0 bg-neutral-950/30 z-10"></div>
+            <img
+              src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop"
+              alt="Abstract 3D Background"
+              class="w-full h-full object-cover grayscale opacity-60"
+              loading="eager" />
+            <div
+              class="absolute inset-0 bg-gradient-to-b from-neutral-950/50 via-transparent to-neutral-950"></div>
+          </div>
+
+          <div
+            class="w-full mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10 w-full h-full flex flex-col justify-center">
+            <div id="hero-parallax" class="w-full">
+              <!-- Main Typography -->
+              <div class="relative z-20 mix-blend-difference">
+                <h1
+                  id="hero-title-1"
+                  class="text-[12vw] leading-none font-bold tracking-tighter text-white/90 text-center md:text-left opacity-0"
+                  style="
+                    font-family: &quot;Inter&quot;, sans-serif;
+                    text-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
+                  ">
+                  CREATIVE
+                </h1>
+
+                <!-- Gradient Bar -->
+                <div
+                  id="hero-gradient-bar"
+                  class="h-4 md:h-6 w-full md:w-2/3 bg-gradient-to-r from-teal-500 via-orange-400 to-orange-600 origin-left mt-[-2vw] md:mt-[-4vw] relative z-[-1] opacity-90"
+                  style="transform: scaleX(0)"></div>
+
+                <h1
+                  id="hero-title-2"
+                  class="text-[12vw] leading-none font-bold tracking-tighter text-white/90 text-center md:text-right mt-2 md:mt-[-2vw] opacity-0"
+                  style="
+                    font-family: &quot;Inter&quot;, sans-serif;
+                    text-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
+                  ">
+                  MINIMALIST
+                </h1>
+              </div>
+
+              <!-- Bottom Philosophy -->
+              <div
+                id="hero-philosophy"
+                class="mt-24 md:mt-32 grid grid-cols-1 md:grid-cols-4 gap-8 items-end border-t border-white/10 pt-8 opacity-0">
+                <div class="col-span-1">
+                  <span
+                    class="text-sm font-medium text-neutral-400 uppercase tracking-widest"
+                    >Our Philosophy</span
+                  >
+                </div>
+                <div class="col-span-1 md:col-span-3">
+                  <p
+                    class="text-base md:text-lg text-neutral-300 font-light leading-relaxed max-w-3xl ml-auto text-right md:text-left">
+                    We believe that simplicity is the ultimate sophistication.
+                    Our minimalist design philosophy revolves around stripping
+                    away the clutter to reveal the essence of your vision.
+                    Through carefully curated elements, clean lines, and subtle
+                    textures, we create spaces and products that exude timeless
+                    elegance and functionality.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===================== ABOUT SECTION ===================== -->
+        <section
+          id="about"
+          class="scroll-mt-20 py-32 bg-neutral-950 relative overflow-hidden">
+          <div class="w-full mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+            <div class="flex flex-col md:flex-row gap-12 lg:gap-24">
+              <!-- Left Column - Image -->
+              <div class="w-full md:w-1/3 lg:w-1/4">
+                <div class="reveal-up">
+                  <div
+                    class="relative aspect-[3/4] w-full max-w-xs mx-auto md:mx-0 overflow-hidden bg-neutral-900 mb-8 grayscale hover:grayscale-0 transition-all duration-700">
+                    <img
+                      src="images/profile.jpg"
+                      alt="Rishu Kumar Sharma"
+                      class="absolute inset-0 w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity"
+                      loading="lazy" />
+                  </div>
+                </div>
+                <div class="reveal-up hidden md:block" data-delay="0.1">
+                  <button
+                    id="resume-btn"
+                    class="group flex items-center gap-3 text-white text-sm font-medium tracking-wide hover:text-neutral-400 transition-colors">
+                    <span
+                      class="h-[1px] w-8 bg-white group-hover:w-12 transition-all"></span>
+                    DOWNLOAD RESUME
+                  </button>
+                </div>
+              </div>
+
+              <!-- Right Column -->
+              <div
+                class="w-full md:w-2/3 lg:w-3/4 flex flex-col justify-between">
+                <div>
+                  <div class="reveal-up" data-delay="0.2">
+                    <h2
+                      class="text-[12vw] md:text-[8vw] leading-none font-bold tracking-tighter text-neutral-100 mb-12 mix-blend-difference"
+                      style="font-family: &quot;Inter&quot;, sans-serif">
+                      ABOUT
+                    </h2>
+                  </div>
+
+                  <div class="reveal-up" data-delay="0.3">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+                      <div>
+                        <h3
+                          class="text-xl md:text-2xl font-light text-neutral-200 mb-6 leading-relaxed">
+                          UI/UX Designer with 2+ years of experience in B2B and
+                          D2C products. Skilled in Figma, Framer, wireframes,
+                          prototypes, and responsive UI. Experienced in UX
+                          research, usability testing, and agile workflows. Led
+                          end-to-end design for Pointo's D2C battery platform
+                          and an e-rickshaw driver app with battery tracking and
+                          in-app purchases.
+                        </h3>
+                        <p class="text-neutral-500 leading-relaxed">
+                          Based in Noida, Uttar Pradesh, India, I specialize in
+                          creating user-centered designs that solve real
+                          problems while delivering measurable business value.
+                          My approach combines thorough UX research with modern
+                          design practices.
+                        </p>
+                      </div>
+                      <div class="flex flex-col justify-end">
+                        <div class="border-t border-neutral-800 pt-6">
+                          <span
+                            class="text-xs font-bold text-neutral-500 uppercase tracking-widest block mb-4"
+                            >Core Competencies</span
+                          >
+                          <p class="text-neutral-400 leading-relaxed text-sm">
+                            Figma &bull; Framer &bull; Adobe XD &bull; Sketch
+                            &bull; InVision &bull; Protopie &bull; Adobe
+                            Creative Suite &bull; User Experience (UX) Design
+                            &bull; UI Design &bull; Mobile Application Design
+                            &bull; Web Design &bull; Responsive Design &bull;
+                            Design Systems &bull; Interaction Design
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Stats -->
+                <div class="reveal-up" data-delay="0.4">
+                  <div
+                    class="grid grid-cols-2 md:grid-cols-4 gap-8 border-t border-neutral-800 pt-8">
+                    <div class="group">
+                      <div
+                        class="text-3xl lg:text-4xl font-bold text-neutral-100 mb-1"
+                        style="font-family: &quot;Inter&quot;, sans-serif">
+                        2+
+                      </div>
+                      <div
+                        class="text-[10px] font-bold text-neutral-600 uppercase tracking-widest group-hover:text-neutral-400 transition-colors">
+                        Years Experience
+                      </div>
+                    </div>
+                    <div class="group">
+                      <div
+                        class="text-3xl lg:text-4xl font-bold text-neutral-100 mb-1"
+                        style="font-family: &quot;Inter&quot;, sans-serif">
+                        5+
+                      </div>
+                      <div
+                        class="text-[10px] font-bold text-neutral-600 uppercase tracking-widest group-hover:text-neutral-400 transition-colors">
+                        Projects Completed
+                      </div>
+                    </div>
+                    <div class="group">
+                      <div
+                        class="text-3xl lg:text-4xl font-bold text-neutral-100 mb-1"
+                        style="font-family: &quot;Inter&quot;, sans-serif">
+                        2
+                      </div>
+                      <div
+                        class="text-[10px] font-bold text-neutral-600 uppercase tracking-widest group-hover:text-neutral-400 transition-colors">
+                        Companies
+                      </div>
+                    </div>
+                    <div class="group">
+                      <div
+                        class="text-3xl lg:text-4xl font-bold text-neutral-100 mb-1"
+                        style="font-family: &quot;Inter&quot;, sans-serif">
+                        100%
+                      </div>
+                      <div
+                        class="text-[10px] font-bold text-neutral-600 uppercase tracking-widest group-hover:text-neutral-400 transition-colors">
+                        Client Satisfaction
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Mobile Resume Button -->
+                <div class="mt-12 md:hidden">
+                  <button
+                    id="resume-btn-mobile"
+                    class="w-full py-4 border border-neutral-800 text-white text-sm font-bold tracking-widest hover:bg-neutral-900 transition-colors">
+                    DOWNLOAD RESUME
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===================== WORK SECTION ===================== -->
+        <section id="work" class="scroll-mt-20 py-32 bg-neutral-950">
+          <div class="w-full mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+            <!-- Header -->
+            <div
+              class="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
+              <div class="reveal-up">
+                <h2
+                  class="text-[10vw] md:text-[6vw] leading-none font-bold tracking-tighter text-neutral-100"
+                  style="font-family: &quot;Inter&quot;, sans-serif">
+                  SELECTED<br />WORK
+                </h2>
+              </div>
+              <div class="reveal-up" data-delay="0.1">
+                <div
+                  class="flex flex-wrap gap-x-6 gap-y-2"
+                  id="category-filters">
+                  <button
+                    class="filter-btn text-sm md:text-base transition-colors duration-300 text-white border-b border-white"
+                    data-category="All">
+                    All
+                  </button>
+                  <button
+                    class="filter-btn text-sm md:text-base transition-colors duration-300 text-neutral-500 hover:text-neutral-300"
+                    data-category="Web Design">
+                    Web Design
+                  </button>
+                  <button
+                    class="filter-btn text-sm md:text-base transition-colors duration-300 text-neutral-500 hover:text-neutral-300"
+                    data-category="Mobile App">
+                    Mobile App
+                  </button>
+                  <button
+                    class="filter-btn text-sm md:text-base transition-colors duration-300 text-neutral-500 hover:text-neutral-300"
+                    data-category="Web Application">
+                    Web Application
+                  </button>
+                  <button
+                    class="filter-btn text-sm md:text-base transition-colors duration-300 text-neutral-500 hover:text-neutral-300"
+                    data-category="Branding">
+                    Branding
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Projects Grid -->
+            <div
+              class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-24"
+              id="projects-grid">
+              <!-- Projects injected by JS -->
+            </div>
+          </div>
+        </section>
+
+        <!-- ===================== CONTACT SECTION ===================== -->
+        <section
+          id="contact"
+          class="scroll-mt-20 py-32 bg-neutral-950 border-t border-neutral-900">
+          <div class="w-full mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+            <div
+              class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-32 items-start">
+              <!-- Left Column -->
+              <div>
+                <div class="reveal-up">
+                  <h2
+                    class="text-[10vw] lg:text-[6vw] leading-none font-bold tracking-tighter text-neutral-100 mb-12"
+                    style="font-family: &quot;Inter&quot;, sans-serif">
+                    GET IN<br />TOUCH
+                  </h2>
+                </div>
+
+                <div class="reveal-up" data-delay="0.1">
+                  <p
+                    class="text-xl md:text-2xl text-neutral-400 font-light mb-16 max-w-lg leading-relaxed">
+                    Have a project in mind? Let's collaborate to build something
+                    exceptional.
+                  </p>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="space-y-8">
+                  <div class="reveal-up group" data-delay="0.2">
+                    <span
+                      class="block text-sm text-neutral-500 mb-1 uppercase tracking-wider"
+                      >Email</span
+                    >
+                    <a
+                      href="mailto:rishu3826@gmail.com"
+                      class="text-2xl md:text-3xl text-neutral-200 hover:text-white transition-colors font-medium"
+                      >rishu3826@gmail.com</a
+                    >
+                  </div>
+                  <div class="reveal-up group" data-delay="0.3">
+                    <span
+                      class="block text-sm text-neutral-500 mb-1 uppercase tracking-wider"
+                      >Phone</span
+                    >
+                    <a
+                      href="tel:7302418932"
+                      class="text-2xl md:text-3xl text-neutral-200 hover:text-white transition-colors font-medium"
+                      >7302418932</a
+                    >
+                  </div>
+                  <div class="reveal-up group" data-delay="0.4">
+                    <span
+                      class="block text-sm text-neutral-500 mb-1 uppercase tracking-wider"
+                      >Location</span
+                    >
+                    <span
+                      class="text-2xl md:text-3xl text-neutral-200 font-medium"
+                      >Noida, Uttar Pradesh, India</span
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right Column - Form -->
+              <div class="reveal-left mt-8 lg:mt-24" data-delay="0.2">
+                <div id="form-container">
+                  <form id="contact-form" class="space-y-12">
+                    <div class="space-y-1">
+                      <label
+                        for="name"
+                        class="block text-sm text-neutral-500 uppercase tracking-wider"
+                        >Name</label
+                      >
+                      <input
+                        id="name"
+                        name="name"
+                        placeholder="John Doe"
+                        class="w-full bg-transparent border-b border-neutral-800 py-4 text-xl text-neutral-100 placeholder-neutral-700 focus:outline-none focus:border-neutral-500 transition-colors" />
+                      <p
+                        id="name-error"
+                        class="text-sm text-red-500 mt-1 hidden"></p>
+                    </div>
+
+                    <div class="space-y-1">
+                      <label
+                        for="email"
+                        class="block text-sm text-neutral-500 uppercase tracking-wider"
+                        >Email</label
+                      >
+                      <input
+                        id="email"
+                        name="email"
+                        type="email"
+                        placeholder="john@example.com"
+                        class="w-full bg-transparent border-b border-neutral-800 py-4 text-xl text-neutral-100 placeholder-neutral-700 focus:outline-none focus:border-neutral-500 transition-colors" />
+                      <p
+                        id="email-error"
+                        class="text-sm text-red-500 mt-1 hidden"></p>
+                    </div>
+
+                    <div class="space-y-1">
+                      <label
+                        for="message"
+                        class="block text-sm text-neutral-500 uppercase tracking-wider"
+                        >Message</label
+                      >
+                      <textarea
+                        id="message"
+                        name="message"
+                        rows="4"
+                        placeholder="Tell me about your project..."
+                        class="w-full bg-transparent border-b border-neutral-800 py-4 text-xl text-neutral-100 placeholder-neutral-700 focus:outline-none focus:border-neutral-500 transition-colors resize-none"></textarea>
+                      <p
+                        id="message-error"
+                        class="text-sm text-red-500 mt-1 hidden"></p>
+                    </div>
+
+                    <div class="pt-8">
+                      <button
+                        type="submit"
+                        id="submit-btn"
+                        class="w-full md:w-auto bg-white text-black hover:bg-neutral-200 border-0 uppercase tracking-wider font-semibold px-12 py-4 transition-colors duration-200 inline-flex items-center justify-center gap-2">
+                        Send Message
+                      </button>
+                    </div>
+                  </form>
+                </div>
+
+                <!-- Success Message (hidden by default) -->
+                <div
+                  id="success-message"
+                  class="hidden p-12 border border-neutral-800 bg-neutral-900/30 text-center">
+                  <div
+                    class="inline-flex items-center justify-center p-3 bg-green-500/10 rounded-full text-green-500 mb-6">
+                    <svg
+                      class="w-8 h-8"
+                      viewBox="0 0 24 24"
+                      fill="currentColor">
+                      <path
+                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+                    </svg>
+                  </div>
+                  <h3 class="text-2xl font-bold text-neutral-100 mb-2">
+                    Message Sent
+                  </h3>
+                  <p class="text-neutral-400">
+                    Thank you. We'll be in touch shortly.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- ===================== FOOTER ===================== -->
+      <footer class="bg-neutral-950 pt-24 pb-12">
+        <div class="w-full mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+          <div
+            class="flex flex-col md:flex-row justify-between items-start gap-16 mb-24">
+            <!-- Brand Statement -->
+            <div class="max-w-xl">
+              <a
+                href="/"
+                class="text-3xl font-bold tracking-tighter text-white mb-8 block"
+                >RK.</a
+              >
+              <h3
+                class="text-2xl md:text-4xl font-light text-neutral-300 leading-tight mb-8">
+                Designing exceptional digital experiences that blend creativity
+                with functionality.
+              </h3>
+              <a
+                href="mailto:rishu3826@gmail.com"
+                class="inline-flex items-center gap-2 text-white border-b border-white pb-1 hover:text-neutral-300 hover:border-neutral-300 transition-colors">
+                rishu3826@gmail.com
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M6 6v2h8.59L5 17.59 6.41 19 16 9.41V18h2V6z" />
+                </svg>
+              </a>
+            </div>
+
+            <!-- Nav -->
+            <div class="flex gap-16">
+              <div>
+                <span
+                  class="text-xs font-medium text-neutral-500 uppercase tracking-widest mb-6 block"
+                  >Menu</span
+                >
+                <ul class="space-y-4">
+                  <li>
+                    <a
+                      href="#work"
+                      class="nav-link text-neutral-400 hover:text-white transition-colors"
+                      >Work</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="#about"
+                      class="nav-link text-neutral-400 hover:text-white transition-colors"
+                      >About</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="#contact"
+                      class="nav-link text-neutral-400 hover:text-white transition-colors"
+                      >Contact</a
+                    >
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <span
+                  class="text-xs font-medium text-neutral-500 uppercase tracking-widest mb-6 block"
+                  >Socials</span
+                >
+                <ul class="space-y-4">
+                  <li>
+                    <a
+                      href="https://linkedin.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="text-neutral-400 hover:text-white transition-colors flex items-center gap-2"
+                      >LinkedIn</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="https://github.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="text-neutral-400 hover:text-white transition-colors flex items-center gap-2"
+                      >GitHub</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="https://dribbble.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="text-neutral-400 hover:text-white transition-colors flex items-center gap-2"
+                      >Dribbble</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="https://twitter.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="text-neutral-400 hover:text-white transition-colors flex items-center gap-2"
+                      >Twitter</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Bar -->
+          <div
+            class="border-t border-neutral-900 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-neutral-600 uppercase tracking-widest">
+            <p>&copy; <span id="current-year"></span> Rishu Kumar Sharma</p>
+            <p>All Rights Reserved</p>
+          </div>
+        </div>
+      </footer>
+
+      <!-- ===================== RESUME MODAL ===================== -->
+      <div
+        id="resume-modal"
+        class="fixed inset-0 z-[100] flex items-center justify-center bg-neutral-950/90 backdrop-blur-md p-4 md:p-8 opacity-0 pointer-events-none transition-all duration-300">
+        <div
+          class="relative w-full max-w-5xl h-[85vh] bg-neutral-900 border border-neutral-800 shadow-2xl overflow-hidden flex flex-col transform scale-95 transition-transform duration-300"
+          id="resume-modal-inner">
+          <!-- Toolbar -->
+          <div
+            class="flex items-center justify-between px-6 py-4 border-b border-neutral-800 bg-neutral-900">
+            <h3 class="text-neutral-200 font-medium tracking-wide">
+              Resume Preview
+            </h3>
+            <div class="flex items-center gap-4">
+              <a
+                href="images/Rishu-kumar-sharma-UI-UX-Designer.pdf"
+                download="Rishu-kumar-sharma-UI-UX-Designer.pdf"
+                class="flex items-center gap-2 px-4 py-2 bg-white text-black text-xs font-bold uppercase tracking-widest hover:bg-neutral-200 transition-colors rounded-sm">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+                </svg>
+                Download PDF
+              </a>
+              <button
+                id="resume-close-btn"
+                class="p-2 text-neutral-400 hover:text-white transition-colors rounded-full hover:bg-neutral-800">
+                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <!-- PDF Viewer -->
+          <div class="flex-1 bg-neutral-800 w-full h-full relative">
+            <iframe
+              id="resume-iframe"
+              src=""
+              class="w-full h-full"
+              title="Resume Preview"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Data -->
+    <script src="js/data.js"></script>
+    <!-- Main App Logic -->
+    <script src="js/app.js"></script>
+  </body>
+</html>
