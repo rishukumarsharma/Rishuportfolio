@@ -20,6 +20,9 @@
     initContactForm();
     initResumeModal();
     initHeroParallax();
+    initHeroBackgroundEffects();
+    initAdvancedAnimations();
+    initHeroTitleHover();
   });
 
   // ========================================
@@ -140,6 +143,53 @@
   }
 
   // ========================================
+  // HERO HOVER EFFECTS - Interactive Text
+  // ========================================
+  function initHeroTitleHover() {
+    const title1 = document.getElementById("hero-title-1");
+    const title2 = document.getElementById("hero-title-2");
+
+    // Helper for hover effect
+    const addHover = (el, color, xDir) => {
+      if (!el) return;
+
+      // Add cursor pointer style
+      el.style.cursor = "pointer";
+
+      el.addEventListener("mouseenter", () => {
+        gsap.to(el, {
+          color: color,
+          skewX: -10, // Italic speed effect
+          x: xDir, // Slight shift
+          scale: 1.05,
+          duration: 0.4,
+          ease: "power2.out",
+          overflow: "hidden", // Ensure no scrollbar
+        });
+        // Blur siblings slightly for focus? Maybe too much.
+      });
+
+      el.addEventListener("mouseleave", () => {
+        gsap.to(el, {
+          color: "rgba(255, 255, 255, 0.9)", // Back to default
+          skewX: 0,
+          x: 0,
+          scale: 1,
+          duration: 0.4,
+          ease: "power2.out",
+        });
+      });
+    };
+
+    // Apply effects
+    // Creative -> Teal, shift Right
+    addHover(title1, "#14b8a6", 30);
+
+    // Minimalist -> Orange, shift Left
+    addHover(title2, "#f97316", -30);
+  }
+
+  // ========================================
   // HERO PARALLAX - replaces useScroll/useTransform
   // ========================================
   function initHeroParallax() {
@@ -155,6 +205,84 @@
         start: "top top",
         end: "bottom top",
         scrub: true,
+      },
+    });
+  }
+
+  // ========================================
+  // HERO BACKGROUND ANIMATION
+  // ========================================
+  // ========================================
+  // HERO BACKGROUND ANIMATION (GSAP Grid Stagger)
+  // ========================================
+  function initHeroBackgroundEffects() {
+    const container = document.getElementById("grid-container");
+    if (!container) return;
+
+    // Clear any existing content
+    container.innerHTML = "";
+
+    // Grid Configuration
+    // Adjust rows/cols based on screen size for performance
+    const isMobile = window.innerWidth < 768;
+    // Increase density for full screen coverage
+    const rows = isMobile ? 6 : 10;
+    const cols = isMobile ? 8 : 20;
+    const gutter = 15; // px
+
+    // Full width configuration
+    container.style.display = "grid";
+    container.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+    container.style.gap = `${gutter}px`;
+    container.style.width = "100%";
+    container.style.height = "100%";
+    container.style.maxWidth = "none";
+
+    // Create boxes
+    const totalBoxes = rows * cols;
+    for (let i = 0; i < totalBoxes; i++) {
+      const box = document.createElement("div");
+      box.classList.add("grid-box");
+      box.style.width = "100%"; // Fill grid cell
+      // We want them to fill vertical space too, not just be square
+      // So we remove paddingTop 100% (square) and let grid handle height if we use 1fr rows
+      // But for the stagger effect, squares usually look best.
+      // Let's keep them square but ensure we have enough rows to cover screen.
+      box.style.aspectRatio = "1/1";
+      container.appendChild(box);
+    }
+
+    // 2. Animate Loop
+    const tl = gsap.timeline({ repeat: -1, repeatDelay: 0.5 });
+
+    tl.to(".grid-box", {
+      duration: 1,
+      scale: 0.1,
+      y: 40,
+      yoyo: true,
+      repeat: 1,
+      ease: "power1.inOut",
+      stagger: {
+        amount: 1.5,
+        grid: [rows, cols],
+        axis: null,
+        ease: "linear",
+        from: "center",
+      },
+    });
+
+    // Add a specialized color shift for extra flair (optional, matches portfolio vibe)
+    // Using the branding colors: Teal, Green, Orange
+    gsap.to(".grid-box", {
+      backgroundColor: "random([#0ae448, #00bae2, #ff8709])", // Green, Blue/Teal, Orange
+      duration: 5,
+      ease: "linear",
+      repeat: -1,
+      yoyo: true,
+      stagger: {
+        amount: 5,
+        grid: [rows, cols],
+        from: "center",
       },
     });
   }
@@ -210,6 +338,104 @@
   }
 
   // ========================================
+  // ADVANCED PAGE ANIMATIONS (Work, About, Contact)
+  // ========================================
+  function initAdvancedAnimations() {
+    gsap.registerPlugin(ScrollTrigger);
+
+    // --- WORK SECTION ---
+    const workSection = document.getElementById("work");
+    if (workSection) {
+      const titleTimeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: "#work",
+          start: "top 80%",
+          toggleActions: "play none none reverse",
+        },
+      });
+
+      titleTimeline
+        .from("#work .h-[2px]", { width: 0, duration: 0.8, ease: "power2.out" })
+        .from(
+          "#work span.uppercase",
+          { opacity: 0, x: -20, duration: 0.5 },
+          "-=0.4",
+        )
+        .from(
+          "#work h2",
+          { y: 50, opacity: 0, duration: 0.8, ease: "back.out(1.7)" },
+          "-=0.2",
+        )
+        .from(
+          "#work p.max-w-2xl",
+          { y: 20, opacity: 0, duration: 0.6 },
+          "-=0.4",
+        );
+
+      // Filter Stagger
+      gsap.from(".filter-btn", {
+        scrollTrigger: {
+          trigger: "#category-filters",
+          start: "top 85%",
+        },
+        y: 20,
+        opacity: 0,
+        duration: 0.5,
+        stagger: 0.05,
+        ease: "power2.out",
+      });
+
+      // Breathing Gradient
+      const bgGradient = workSection.querySelector(
+        ".absolute.bg-gradient-to-b",
+      );
+      if (bgGradient) {
+        gsap.to(bgGradient, {
+          scale: 1.2,
+          opacity: 0.8,
+          duration: 4,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+        });
+      }
+    }
+
+    // --- ABOUT SECTION (Stats) ---
+    // Target the stats grid items
+    const statsGrid = document.querySelector("#about .grid.border-t");
+    if (statsGrid) {
+      gsap.from(statsGrid.children, {
+        scrollTrigger: {
+          trigger: statsGrid,
+          start: "top 85%",
+        },
+        y: 30,
+        opacity: 0,
+        stagger: 0.1,
+        duration: 0.6,
+        ease: "power2.out",
+      });
+    }
+
+    // --- CONTACT SECTION (Form) ---
+    const contactForm = document.getElementById("contact-form");
+    if (contactForm) {
+      gsap.from(contactForm.children, {
+        scrollTrigger: {
+          trigger: contactForm,
+          start: "top 80%",
+        },
+        y: 20,
+        opacity: 0,
+        stagger: 0.1,
+        duration: 0.5,
+        ease: "power2.out",
+      });
+    }
+  }
+
+  // ========================================
   // PROJECTS - replaces Work.tsx + ProjectCard + filtering
   // ========================================
   let currentCategory = "All";
@@ -226,32 +452,95 @@
     grid.innerHTML = "";
 
     projects.forEach((project, index) => {
-      const offsetClass = index % 2 === 1 ? "md:mt-24" : "";
-
       const card = document.createElement("div");
-      card.className = `project-card ${offsetClass}`;
+
+      // Explicit Bento Layout based on 'size' property
+      let spanClass = "md:col-span-1"; // Default standard size
+      let heightClass = "min-h-[400px]"; // Default height
+
+      if (project.size === "large") {
+        spanClass = "md:col-span-2 md:row-span-2";
+        heightClass = "min-h-[600px] md:min-h-full";
+      } else if (project.size === "wide") {
+        spanClass = "md:col-span-2";
+        heightClass = "min-h-[400px]";
+      } else if (project.size === "tall") {
+        spanClass = "md:row-span-2";
+        heightClass = "min-h-[600px] md:min-h-full";
+      }
+
+      card.className = `project-card group ${spanClass}`;
       card.dataset.category = project.category;
       card.dataset.id = project.id;
 
+      // Use project color for gradient overlay
+      const gradientColor = project.color || "#3b82f6";
+
+      // Dynamic text sizing based on card size
+      const titleSize =
+        project.size === "large"
+          ? "text-3xl md:text-4xl lg:text-5xl"
+          : "text-2xl md:text-3xl";
+
       card.innerHTML = `
-        <div class="relative aspect-[4/3] overflow-hidden bg-neutral-900 mb-6">
-          <div class="project-overlay absolute inset-0 bg-neutral-800 z-10"></div>
-          <img
-            src="${project.thumbnail}"
-            alt="${project.title}"
-            class="project-image w-full h-full object-cover"
-            loading="lazy"
-          />
-          <div class="project-arrow absolute top-4 right-4 p-2 bg-white text-black rounded-full z-20">
-            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6v2h8.59L5 17.59 6.41 19 16 9.41V18h2V6z"/></svg>
+        <div class="relative w-full h-full overflow-hidden bg-neutral-900 rounded-2xl border border-neutral-800/50 hover:border-neutral-700 transition-all duration-500 ${heightClass}">
+          <!-- Image with gradient overlay -->
+          <div class="absolute inset-0">
+            <img
+              src="${project.thumbnail}"
+              alt="${project.title}"
+              class="project-image w-full h-full object-cover transition-all duration-700"
+              loading="lazy"
+            />
+            <!-- Gradient overlay (darker at bottom for text) -->
+            <div class="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/40 to-transparent opacity-90 group-hover:opacity-80 transition-opacity duration-500"></div>
+            <!-- Accent gradient -->
+            <div class="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[${gradientColor}]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
           </div>
-        </div>
-        <div class="flex flex-col gap-1 border-t border-neutral-800 pt-4">
-          <div class="flex justify-between items-baseline">
-            <h3 class="project-title text-2xl font-bold text-neutral-100">${project.title}</h3>
-            <span class="text-sm font-mono text-neutral-500">${project.year}</span>
+
+          <!-- Content -->
+          <div class="relative h-full flex flex-col justify-end p-6 md:p-8">
+            <!-- Top Bar: Category & Year -->
+            <div class="absolute top-6 left-6 right-6 flex justify-between items-start">
+              <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-white/10 backdrop-blur-md text-white border border-white/20 shadow-lg">
+                ${project.category}
+              </span>
+              <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-mono text-white/80 bg-black/40 backdrop-blur-md border border-white/10">
+                ${project.year}
+              </span>
+            </div>
+
+            <!-- Bottom Content -->
+            <div class="space-y-4">
+              <h3 class="project-title ${titleSize} font-bold text-white leading-[1.1] tracking-tight group-hover:text-neutral-200 transition-colors duration-300">
+                ${project.title}
+              </h3>
+              <p class="text-neutral-300 text-sm md:text-base leading-relaxed line-clamp-2 max-w-xl">
+                ${project.description}
+              </p>
+              
+              <!-- Footer: Tags and Arrow -->
+              <div class="flex items-center justify-between pt-4 border-t border-white/10">
+                <div class="flex flex-wrap gap-2">
+                  ${project.tags
+                    .slice(0, 3)
+                    .map(
+                      (tag) => `
+                    <span class="text-xs text-neutral-400 font-medium tracking-wide uppercase">${tag}</span>
+                  `,
+                    )
+                    .join('<span class="text-neutral-700 mx-1">•</span>')}
+                </div>
+                
+                <!-- Arrow icon -->
+                <div class="project-arrow flex items-center justify-center w-10 h-10 rounded-full bg-white text-neutral-950 opacity-0 transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 ease-out shadow-lg shadow-white/10">
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M6 6v2h8.59L5 17.59 6.41 19 16 9.41V18h2V6z"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
           </div>
-          <p class="text-neutral-500 text-sm">${project.category} — ${project.tags[0]}</p>
         </div>
       `;
 
@@ -263,19 +552,20 @@
 
       grid.appendChild(card);
 
-      // Animate card in
+      // Animate card in with stagger
       gsap.fromTo(
         card,
-        { opacity: 0, y: 20 },
+        { opacity: 0, y: 30, scale: 0.95 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.5,
+          scale: 1,
+          duration: 0.6,
           delay: index * 0.1,
-          ease: "power2.out",
+          ease: "power3.out",
           scrollTrigger: {
             trigger: card,
-            start: "top 85%",
+            start: "top 90%",
             once: true,
           },
         },
@@ -293,13 +583,40 @@
 
         currentCategory = category;
 
-        // Update active styles
+        // Update active styles for pill buttons
         filterBtns.forEach((b) => {
-          b.classList.remove("text-white", "border-b", "border-white");
-          b.classList.add("text-neutral-500");
+          // Remove active state
+          b.classList.remove(
+            "bg-white",
+            "text-neutral-950",
+            "shadow-lg",
+            "shadow-white/20",
+          );
+          // Add inactive state
+          b.classList.add(
+            "bg-neutral-900",
+            "text-neutral-400",
+            "border",
+            "border-neutral-800",
+          );
         });
-        btn.classList.remove("text-neutral-500");
-        btn.classList.add("text-white", "border-b", "border-white");
+
+        // Add active state to clicked button
+        btn.classList.remove(
+          "bg-neutral-900",
+          "text-neutral-400",
+          "border",
+          "border-neutral-800",
+          "hover:text-neutral-100",
+          "hover:bg-neutral-800",
+          "hover:border-neutral-700",
+        );
+        btn.classList.add(
+          "bg-white",
+          "text-neutral-950",
+          "shadow-lg",
+          "shadow-white/20",
+        );
 
         // Filter projects
         const filtered =

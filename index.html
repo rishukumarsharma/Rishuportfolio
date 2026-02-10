@@ -59,7 +59,7 @@
       <!-- ===================== HEADER ===================== -->
       <header
         id="site-header"
-        class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-transparent py-6">
+        class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 backdrop-blur-sm py-6">
         <div class="w-full mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
           <nav class="flex items-center justify-between">
             <!-- Logo -->
@@ -167,15 +167,20 @@
           id="home"
           class="scroll-mt-20 relative min-h-screen flex items-center bg-neutral-950 overflow-hidden">
           <!-- Background Image -->
-          <div class="absolute inset-0 z-0">
-            <div class="absolute inset-0 bg-neutral-950/30 z-10"></div>
-            <img
-              src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop"
-              alt="Abstract 3D Background"
-              class="w-full h-full object-cover grayscale opacity-60"
-              loading="eager" />
+          <!-- Animated Background: Grid Stagger -->
+          <div
+            class="absolute inset-0 z-0 overflow-hidden bg-neutral-950"
+            id="hero-bg-container">
+            <!-- Grid Container -->
             <div
-              class="absolute inset-0 bg-gradient-to-b from-neutral-950/50 via-transparent to-neutral-950"></div>
+              id="grid-container"
+              class="absolute inset-0 flex items-center justify-center opacity-20 pointer-events-none"></div>
+
+            <!-- Overlay for integration -->
+            <div
+              class="absolute inset-0 bg-gradient-to-b from-neutral-950/80 via-transparent to-neutral-950 z-10"></div>
+            <div
+              class="absolute inset-0 bg-neutral-950/10 z-10 backdrop-blur-[1px]"></div>
           </div>
 
           <div
@@ -278,7 +283,7 @@
                   </div>
 
                   <div class="reveal-up" data-delay="0.3">
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+                    <div class="grid grid-cols-1 lg:grid-cols gap-12 mb-16">
                       <div>
                         <h3
                           class="text-xl md:text-2xl font-light text-neutral-200 mb-6 leading-relaxed">
@@ -383,54 +388,74 @@
         </section>
 
         <!-- ===================== WORK SECTION ===================== -->
-        <section id="work" class="scroll-mt-20 py-32 bg-neutral-950">
-          <div class="w-full mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+        <section
+          id="work"
+          class="scroll-mt-20 py-32 bg-neutral-950 relative overflow-hidden">
+          <!-- Subtle gradient background accent -->
+          <div
+            class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-to-b from-teal-500/5 via-orange-500/5 to-transparent blur-3xl pointer-events-none"></div>
+
+          <div
+            class="w-full mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
             <!-- Header -->
-            <div
-              class="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
+            <div class="flex flex-col gap-12 mb-24">
+              <!-- Title Section -->
               <div class="reveal-up">
+                <div class="flex items-center gap-4 mb-6">
+                  <div
+                    class="h-[2px] w-12 bg-gradient-to-r from-teal-500 to-orange-500"></div>
+                  <span
+                    class="text-xs font-bold text-neutral-500 uppercase tracking-widest"
+                    >Portfolio</span
+                  >
+                </div>
                 <h2
-                  class="text-[10vw] md:text-[6vw] leading-none font-bold tracking-tighter text-neutral-100"
+                  class="text-[10vw] md:text-[6vw] lg:text-[5vw] leading-none font-bold tracking-tighter text-neutral-100"
                   style="font-family: &quot;Inter&quot;, sans-serif">
-                  SELECTED<br />WORK
+                  SELECTED WORK
                 </h2>
+                <p
+                  class="text-neutral-400 text-base md:text-lg mt-4 max-w-2xl font-light">
+                  A curated collection of projects showcasing design excellence
+                  and innovative solutions
+                </p>
               </div>
+
+              <!-- Filter Pills -->
               <div class="reveal-up" data-delay="0.1">
-                <div
-                  class="flex flex-wrap gap-x-6 gap-y-2"
-                  id="category-filters">
+                <div class="flex flex-wrap gap-3" id="category-filters">
                   <button
-                    class="filter-btn text-sm md:text-base transition-colors duration-300 text-white border-b border-white"
+                    class="filter-btn group relative px-6 py-2.5 text-sm font-medium rounded-full transition-all duration-300 bg-white text-neutral-950 shadow-lg shadow-white/20"
                     data-category="All">
-                    All
+                    <span class="relative z-10">All</span>
                   </button>
                   <button
-                    class="filter-btn text-sm md:text-base transition-colors duration-300 text-neutral-500 hover:text-neutral-300"
+                    class="filter-btn group relative px-6 py-2.5 text-sm font-medium rounded-full transition-all duration-300 bg-neutral-900 text-neutral-400 hover:text-neutral-100 hover:bg-neutral-800 border border-neutral-800 hover:border-neutral-700"
                     data-category="Web Design">
-                    Web Design
+                    <span class="relative z-10">Web Design</span>
                   </button>
                   <button
-                    class="filter-btn text-sm md:text-base transition-colors duration-300 text-neutral-500 hover:text-neutral-300"
+                    class="filter-btn group relative px-6 py-2.5 text-sm font-medium rounded-full transition-all duration-300 bg-neutral-900 text-neutral-400 hover:text-neutral-100 hover:bg-neutral-800 border border-neutral-800 hover:border-neutral-700"
                     data-category="Mobile App">
-                    Mobile App
+                    <span class="relative z-10">Mobile App</span>
                   </button>
                   <button
-                    class="filter-btn text-sm md:text-base transition-colors duration-300 text-neutral-500 hover:text-neutral-300"
+                    class="filter-btn group relative px-6 py-2.5 text-sm font-medium rounded-full transition-all duration-300 bg-neutral-900 text-neutral-400 hover:text-neutral-100 hover:bg-neutral-800 border border-neutral-800 hover:border-neutral-700"
                     data-category="Web Application">
-                    Web Application
+                    <span class="relative z-10">Web Application</span>
                   </button>
                   <button
-                    class="filter-btn text-sm md:text-base transition-colors duration-300 text-neutral-500 hover:text-neutral-300"
+                    class="filter-btn group relative px-6 py-2.5 text-sm font-medium rounded-full transition-all duration-300 bg-neutral-900 text-neutral-400 hover:text-neutral-100 hover:bg-neutral-800 border border-neutral-800 hover:border-neutral-700"
                     data-category="Branding">
-                    Branding
+                    <span class="relative z-10">Branding</span>
                   </button>
                 </div>
               </div>
             </div>
 
-            <!-- Projects Grid -->
+            <!-- Projects Grid - Bento Style -->
             <div
-              class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-24"
+              class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-auto grid-flow-dense"
               id="projects-grid">
               <!-- Projects injected by JS -->
             </div>

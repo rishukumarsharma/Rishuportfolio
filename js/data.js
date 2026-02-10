@@ -1,8 +1,3 @@
-/**
- * Portfolio Data
- * Converted from React's JSON imports to global JS variables.
- */
-
 const PROJECTS = [
   {
     id: "enterprise-crm-redesign",
@@ -18,6 +13,7 @@ const PROJECTS = [
     featured: true,
     year: "2024",
     color: "#3b82f6",
+    size: "large", // 2x2
   },
   {
     id: "fintech-saas-dashboard",
@@ -32,6 +28,7 @@ const PROJECTS = [
     featured: true,
     year: "2024",
     color: "#10b981",
+    size: "tall", // 1x2
   },
   {
     id: "ecommerce-landing-redesign",
@@ -51,6 +48,7 @@ const PROJECTS = [
     featured: true,
     year: "2024",
     color: "#8b5cf6",
+    size: "wide", // 2x1
   },
   {
     id: "access-management",
@@ -65,6 +63,7 @@ const PROJECTS = [
     featured: false,
     year: "2023",
     color: "#ef4444",
+    // Standard 1x1 by default
   },
   {
     id: "ai-productivity-tool",
@@ -79,6 +78,7 @@ const PROJECTS = [
     featured: true,
     year: "2024",
     color: "#f59e0b",
+    // Standard 1x1 by default
   },
   {
     id: "real-estate-platform",
@@ -93,6 +93,7 @@ const PROJECTS = [
     featured: false,
     year: "2023",
     color: "#06b6d4",
+    // Standard 1x1 by default
   },
 ];
 

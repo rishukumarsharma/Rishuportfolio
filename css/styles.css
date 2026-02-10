@@ -53,10 +53,39 @@ body {
 }
 
 /* ========================================
-   Header Scroll State
+   Header Scroll State & Animation
    ======================================== */
+@keyframes headerGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+#site-header {
+  background: linear-gradient(
+    -45deg,
+    rgba(10, 10, 10, 0),
+    rgba(30, 30, 30, 0.1),
+    rgba(10, 10, 10, 0)
+  );
+  background-size: 400% 400%;
+  animation: headerGradient 15s ease infinite;
+}
+
 .header-scrolled {
-  background: rgba(10, 10, 10, 0.9) !important;
+  background: linear-gradient(
+    -45deg,
+    rgba(10, 10, 10, 0.9),
+    rgba(25, 25, 25, 0.95),
+    rgba(10, 10, 10, 0.9)
+  ) !important;
+  background-size: 400% 400% !important;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
@@ -81,48 +110,69 @@ body {
 }
 
 /* ========================================
-   Project Card Hover Effects
+   Project Card Hover Effects - Bento Style
    ======================================== */
 .project-card {
   cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
 }
 
 .project-card .project-image {
-  transition:
-    filter 0.7s ease,
-    transform 0.5s ease;
-  filter: grayscale(100%);
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: scale(1);
 }
 
 .project-card:hover .project-image {
-  filter: grayscale(0%);
-  transform: scale(1.05);
+  transform: scale(1.08);
 }
 
-.project-card .project-overlay {
-  opacity: 0;
-  transition: opacity 0.3s ease;
+/* Line clamp utility for description */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
-.project-card:hover .project-overlay {
-  opacity: 0.4;
+/* Backdrop blur support */
+@supports (backdrop-filter: blur(10px)) or (-webkit-backdrop-filter: blur(10px)) {
+  .backdrop-blur-sm {
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
 }
 
-.project-card .project-arrow {
-  opacity: 0;
-  transition: opacity 0.3s ease;
+/* ========================================
+   Filter Pill Button Interactions
+   ======================================== */
+.filter-btn {
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.project-card:hover .project-arrow {
-  opacity: 1;
+.filter-btn:hover {
+  transform: translateY(-2px);
 }
 
-.project-card .project-title {
-  transition: color 0.3s ease;
+.filter-btn:active {
+  transform: translateY(0) scale(0.98);
 }
 
-.project-card:hover .project-title {
-  color: #a3a3a3;
+/* Active filter button (white background) */
+.filter-btn.bg-white {
+  transform: translateY(-1px);
+}
+
+.filter-btn.bg-white:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 20px 25px -5px rgba(255, 255, 255, 0.15),
+    0 10px 10px -5px rgba(255, 255, 255, 0.1);
 }
 
 /* ========================================
@@ -424,4 +474,16 @@ textarea.error {
   html {
     scroll-behavior: auto;
   }
+}
+
+/* ========================================
+   Hero Grid Animation
+   ======================================== */
+.grid-box {
+  background-color: #0ae448;
+  position: relative;
+  border-radius: 4px; /* Slightly softer */
+  /* Remove before pseudo-element as JS will handle sizing */
+  opacity: 0.8;
+  box-shadow: 0 0 10px rgba(10, 228, 72, 0.4);
 }
