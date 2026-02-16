@@ -10,20 +10,120 @@
   // INITIALIZATION
   // ========================================
   document.addEventListener("DOMContentLoaded", () => {
-    initFooterYear();
-    initHeader();
-    initMobileMenu();
-    initSmoothScroll();
-    initHeroAnimations();
-    initScrollReveal();
-    initProjects();
-    initContactForm();
-    initResumeModal();
-    initHeroParallax();
-    initHeroBackgroundEffects();
-    initAdvancedAnimations();
-    initHeroTitleHover();
+    initLoader();
+    try {
+      initFooterYear();
+      initHeader();
+      initMobileMenu();
+      initSmoothScroll();
+      initScrollReveal();
+      initProjects();
+      initContactForm();
+      initResumeModal();
+      initHeroParallax();
+      initHeroBackgroundEffects();
+      initAdvancedAnimations();
+      initHeroTitleHover();
+    } catch (e) {
+      console.warn("Initialization error:", e);
+    }
   });
+
+  // ========================================
+  // LOADER ANIMATION
+  // ========================================
+  function initLoader() {
+    const loader = document.getElementById("loader");
+    const content = document.getElementById("loader-content");
+    const app = document.querySelector(".app");
+
+    if (!loader || !content) return;
+
+    // Default clean-up function if animation fails
+    const hideLoader = () => {
+      if (loader.style.display !== "none") {
+        loader.style.display = "none";
+        document.body.classList.remove("overflow-hidden");
+        if (app) app.style.opacity = "1";
+        if (app) app.style.transform = "translateY(0)";
+
+        // Try to trigger hero animations if possible
+        try {
+          if (typeof initHeroAnimations === "function") initHeroAnimations();
+        } catch (e) {
+          console.warn("Hero animations failed:", e);
+        }
+      }
+    };
+
+    // Safety fallback: guaranteed removal after 3.5s
+    setTimeout(hideLoader, 3500);
+
+    // Check if GSAP is loaded
+    if (typeof gsap === "undefined") {
+      console.error("GSAP not loaded");
+      // If no GSAP, just hide after 1s
+      setTimeout(hideLoader, 1000);
+      return;
+    }
+
+    try {
+      // Ensure smooth start
+      gsap.set(content, { opacity: 1, scale: 1 });
+      gsap.set(loader, { opacity: 1 });
+      gsap.set(app, { opacity: 0, y: 20 });
+
+      const tl = gsap.timeline({
+        defaults: { ease: "power2.inOut" },
+        onComplete: () => {
+          loader.style.display = "none";
+          document.body.classList.remove("overflow-hidden");
+          ScrollTrigger.refresh();
+        },
+      });
+
+      tl.to(content, {
+        scale: 0.8,
+        opacity: 0,
+        duration: 0.6,
+        delay: 2, // Wait 1.5 seconds
+        ease: "back.in(1.7)",
+      })
+        .to(
+          loader,
+          {
+            opacity: 0,
+            duration: 0.8,
+            ease: "power2.inOut",
+          },
+          "-=0.2",
+        )
+        .to(
+          app,
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+          },
+          "-=0.6",
+        )
+        .call(
+          () => {
+            try {
+              if (typeof initHeroAnimations === "function")
+                initHeroAnimations();
+            } catch (e) {
+              console.warn("Hero animations failed in timeline:", e);
+            }
+          },
+          null,
+          "-=0.8",
+        );
+    } catch (error) {
+      console.error("Loader animation error:", error);
+      hideLoader();
+    }
+  }
 
   // ========================================
   // FOOTER YEAR
@@ -223,12 +323,10 @@
     container.innerHTML = "";
 
     // Grid Configuration
-    // Adjust rows/cols based on screen size for performance
     const isMobile = window.innerWidth < 768;
-    // Increase density for full screen coverage
     const rows = isMobile ? 6 : 10;
-    const cols = isMobile ? 8 : 20;
-    const gutter = 15; // px
+    const cols = isMobile ? 6 : 12;
+    const gutter = 2;
 
     // Full width configuration
     container.style.display = "grid";
@@ -238,52 +336,46 @@
     container.style.height = "100%";
     container.style.maxWidth = "none";
 
+    // Ensure container is subtle
+    container.style.opacity = "1";
+    container.style.zIndex = "0"; // Behind content
+
     // Create boxes
     const totalBoxes = rows * cols;
+    // Base dark theme colors
+    const baseColor = "#050505"; // Deepest black
+    const highlightColors = [
+      "#1a1a1a", // Neutral gray
+      "#1e293b", // Slate blue
+      "#0f2e29", // Visible Dark Teal
+      "#2e1a0f", // Visible Dark Orange
+    ];
+
     for (let i = 0; i < totalBoxes; i++) {
       const box = document.createElement("div");
       box.classList.add("grid-box");
-      box.style.width = "100%"; // Fill grid cell
-      // We want them to fill vertical space too, not just be square
-      // So we remove paddingTop 100% (square) and let grid handle height if we use 1fr rows
-      // But for the stagger effect, squares usually look best.
-      // Let's keep them square but ensure we have enough rows to cover screen.
-      box.style.aspectRatio = "1/1";
+      // Start with base color
+      box.style.backgroundColor = baseColor;
+      box.style.width = "100%";
+      box.style.height = "100%";
       container.appendChild(box);
     }
 
-    // 2. Animate Loop
-    const tl = gsap.timeline({ repeat: -1, repeatDelay: 0.5 });
-
-    tl.to(".grid-box", {
-      duration: 1,
-      scale: 0.1,
-      y: 40,
-      yoyo: true,
-      repeat: 1,
-      ease: "power1.inOut",
-      stagger: {
-        amount: 1.5,
-        grid: [rows, cols],
-        axis: null,
-        ease: "linear",
-        from: "center",
-      },
-    });
-
-    // Add a specialized color shift for extra flair (optional, matches portfolio vibe)
-    // Using the branding colors: Teal, Green, Orange
+    // Smooth Breathing Animation
+    // repeatRefresh: true ensures new random colors are picked each cycle
     gsap.to(".grid-box", {
-      backgroundColor: "random([#0ae448, #00bae2, #ff8709])", // Green, Blue/Teal, Orange
-      duration: 5,
-      ease: "linear",
+      backgroundColor: () => gsap.utils.random(highlightColors),
+      duration: 4,
+      ease: "sine.inOut",
       repeat: -1,
       yoyo: true,
+      repeatRefresh: true, // Key for dynamic color changing
       stagger: {
-        amount: 5,
+        amount: 8,
         grid: [rows, cols],
-        from: "center",
+        from: "random",
       },
+      force3D: true, // GPU optimization
     });
   }
 
