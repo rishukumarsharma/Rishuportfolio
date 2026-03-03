@@ -212,33 +212,59 @@
   function initHeroAnimations() {
     gsap.registerPlugin(ScrollTrigger);
 
-    // Title 1 - CREATIVE
+    const heroTitle = document.getElementById("hero-title");
+    if (!heroTitle) return;
+
     gsap.fromTo(
-      "#hero-title-1",
-      { opacity: 0, y: 100 },
-      { opacity: 1, y: 0, duration: 1, ease: "expo.out", delay: 0.2 },
+      "#hero-top-strip",
+      { opacity: 0, y: -24 },
+      { opacity: 1, y: 0, duration: 0.7, ease: "power3.out", delay: 0.1 },
     );
 
-    // Gradient bar
-    gsap.to("#hero-gradient-bar", {
-      scaleX: 1,
-      duration: 1.2,
-      delay: 0.4,
-      ease: "expo.out",
-    });
-
-    // Title 2 - MINIMALIST
     gsap.fromTo(
-      "#hero-title-2",
-      { opacity: 0, y: 100 },
-      { opacity: 1, y: 0, duration: 1, delay: 0.3, ease: "expo.out" },
+      ".hero-line",
+      { opacity: 0, y: 40, filter: "blur(8px)" },
+      {
+        opacity: 1,
+        y: 0,
+        filter: "blur(0px)",
+        duration: 1,
+        ease: "power3.out",
+        stagger: 0.12,
+        delay: 0.2,
+      },
     );
 
-    // Philosophy section
     gsap.fromTo(
-      "#hero-philosophy",
-      { opacity: 0, y: 50 },
-      { opacity: 1, y: 0, duration: 0.8, delay: 1.0, ease: "power2.out" },
+      "#hero-subtitle",
+      { opacity: 0, y: 24 },
+      { opacity: 1, y: 0, duration: 0.7, ease: "power2.out", delay: 0.75 },
+    );
+
+    gsap.fromTo(
+      "#hero-cta-wrap",
+      { opacity: 0, y: 24 },
+      { opacity: 1, y: 0, duration: 0.7, ease: "power2.out", delay: 0.9 },
+    );
+
+    gsap.fromTo(
+      "#hero-meta-row",
+      { opacity: 0, y: 18 },
+      { opacity: 1, y: 0, duration: 0.6, ease: "power2.out", delay: 1.0 },
+    );
+
+    gsap.fromTo(
+      ".hero-preview-card",
+      { opacity: 0, y: 42, scale: 0.96 },
+      {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        duration: 0.75,
+        ease: "power3.out",
+        stagger: 0.08,
+        delay: 1.05,
+      },
     );
   }
 
@@ -246,47 +272,33 @@
   // HERO HOVER EFFECTS - Interactive Text
   // ========================================
   function initHeroTitleHover() {
-    const title1 = document.getElementById("hero-title-1");
-    const title2 = document.getElementById("hero-title-2");
+    const emphasisWords = document.querySelectorAll(".hero-emphasis");
+    if (!emphasisWords.length) return;
 
-    // Helper for hover effect
-    const addHover = (el, color, xDir) => {
-      if (!el) return;
-
-      // Add cursor pointer style
+    emphasisWords.forEach((el, index) => {
+      const hoverColor = index % 2 === 0 ? "#f5f5f5" : "#e5e5e5";
       el.style.cursor = "pointer";
 
       el.addEventListener("mouseenter", () => {
         gsap.to(el, {
-          color: color,
-          skewX: -10, // Italic speed effect
-          x: xDir, // Slight shift
-          scale: 1.05,
-          duration: 0.4,
+          color: hoverColor,
+          y: -2,
+          duration: 0.3,
           ease: "power2.out",
-          overflow: "hidden", // Ensure no scrollbar
+          textShadow: "0 8px 25px rgba(0, 0, 0, 0.2)",
         });
-        // Blur siblings slightly for focus? Maybe too much.
       });
 
       el.addEventListener("mouseleave", () => {
         gsap.to(el, {
-          color: "rgba(255, 255, 255, 0.9)", // Back to default
-          skewX: 0,
-          x: 0,
-          scale: 1,
-          duration: 0.4,
+          color: "#a3a3a3",
+          y: 0,
+          duration: 0.3,
           ease: "power2.out",
+          textShadow: "none",
         });
       });
-    };
-
-    // Apply effects
-    // Creative -> Teal, shift Right
-    addHover(title1, "#14b8a6", 30);
-
-    // Minimalist -> Orange, shift Left
-    addHover(title2, "#f97316", -30);
+    });
   }
 
   // ========================================
@@ -296,9 +308,19 @@
     const parallaxEl = document.getElementById("hero-parallax");
     if (!parallaxEl) return;
 
-    gsap.to(parallaxEl, {
-      y: 200,
-      opacity: 0,
+    gsap.to("#hero-content", {
+      y: 90,
+      ease: "none",
+      scrollTrigger: {
+        trigger: "#home",
+        start: "top top",
+        end: "bottom top",
+        scrub: true,
+      },
+    });
+
+    gsap.to("#hero-project-strip", {
+      y: -60,
       ease: "none",
       scrollTrigger: {
         trigger: "#home",
@@ -312,71 +334,39 @@
   // ========================================
   // HERO BACKGROUND ANIMATION
   // ========================================
-  // ========================================
-  // HERO BACKGROUND ANIMATION (GSAP Grid Stagger)
-  // ========================================
   function initHeroBackgroundEffects() {
-    const container = document.getElementById("grid-container");
-    if (!container) return;
+    const ambientOne = document.getElementById("hero-ambient-one");
+    const ambientTwo = document.getElementById("hero-ambient-two");
+    const noiseOverlay = document.querySelector(".hero-noise-overlay");
+    if (!ambientOne || !ambientTwo) return;
 
-    // Clear any existing content
-    container.innerHTML = "";
-
-    // Grid Configuration
-    const isMobile = window.innerWidth < 768;
-    const rows = isMobile ? 6 : 10;
-    const cols = isMobile ? 6 : 12;
-    const gutter = 2;
-
-    // Full width configuration
-    container.style.display = "grid";
-    container.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
-    container.style.gap = `${gutter}px`;
-    container.style.width = "100%";
-    container.style.height = "100%";
-    container.style.maxWidth = "none";
-
-    // Ensure container is subtle
-    container.style.opacity = "1";
-    container.style.zIndex = "0"; // Behind content
-
-    // Create boxes
-    const totalBoxes = rows * cols;
-    // Base dark theme colors
-    const baseColor = "#050505"; // Deepest black
-    const highlightColors = [
-      "#1a1a1a", // Neutral gray
-      "#1e293b", // Slate blue
-      "#0f2e29", // Visible Dark Teal
-      "#2e1a0f", // Visible Dark Orange
-    ];
-
-    for (let i = 0; i < totalBoxes; i++) {
-      const box = document.createElement("div");
-      box.classList.add("grid-box");
-      // Start with base color
-      box.style.backgroundColor = baseColor;
-      box.style.width = "100%";
-      box.style.height = "100%";
-      container.appendChild(box);
-    }
-
-    // Smooth Breathing Animation
-    // repeatRefresh: true ensures new random colors are picked each cycle
-    gsap.to(".grid-box", {
-      backgroundColor: () => gsap.utils.random(highlightColors),
-      duration: 4,
+    gsap.to(ambientOne, {
+      x: 40,
+      y: 25,
+      duration: 9,
       ease: "sine.inOut",
       repeat: -1,
       yoyo: true,
-      repeatRefresh: true, // Key for dynamic color changing
-      stagger: {
-        amount: 8,
-        grid: [rows, cols],
-        from: "random",
-      },
-      force3D: true, // GPU optimization
     });
+
+    gsap.to(ambientTwo, {
+      x: -35,
+      y: -20,
+      duration: 11,
+      ease: "sine.inOut",
+      repeat: -1,
+      yoyo: true,
+    });
+
+    if (noiseOverlay) {
+      gsap.to(noiseOverlay, {
+        opacity: 0.25,
+        duration: 6,
+        ease: "sine.inOut",
+        repeat: -1,
+        yoyo: true,
+      });
+    }
   }
 
   // ========================================
@@ -491,23 +481,6 @@
           ease: "sine.inOut",
         });
       }
-    }
-
-    // --- ABOUT SECTION (Stats) ---
-    // Target the stats grid items
-    const statsGrid = document.querySelector("#about .grid.border-t");
-    if (statsGrid) {
-      gsap.from(statsGrid.children, {
-        scrollTrigger: {
-          trigger: statsGrid,
-          start: "top 85%",
-        },
-        y: 30,
-        opacity: 0,
-        stagger: 0.1,
-        duration: 0.6,
-        ease: "power2.out",
-      });
     }
 
     // --- CONTACT SECTION (Form) ---
